@@ -64,16 +64,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="utility">Utilidad:</label>
-                                        <select name="utility" class="form-control" id="utility">
-                                            <option value="0.0">0%</option>
-                                            <option value="0.05">5%</option>
-                                            <option value="0.1">10%</option>
-                                            <option value="0.15">15%</option>
-                                            <option value="0.2" selected>20%</option>
-                                            <option value="0.22.5">22.5%</option>
-                                            <option value="0.25">25%</option>
-                                            <option value="0.30">30%</option>
-                                        </select>
+                                        <input type="number" step="any" min="0" name="utility" class="form-control" id="utility" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="payment_number">Cuotas:</label>
