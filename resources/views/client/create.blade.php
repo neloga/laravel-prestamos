@@ -70,6 +70,7 @@
                                             <option value="0.1">10%</option>
                                             <option value="0.15">15%</option>
                                             <option value="0.2" selected>20%</option>
+                                            <option value="0.22.5">22.5%</option>
                                             <option value="0.25">25%</option>
                                             <option value="0.30">30%</option>
                                         </select>
