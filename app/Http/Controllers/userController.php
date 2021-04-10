@@ -110,7 +110,6 @@ class userController extends Controller
         $address = $request->address;
         $province = $request->province;
         $phone = $request->phone;
-        $nit = $request->nit_number;
         $utility = $request->utility;
         $payment_number = $request->payment_number;
         $payment_day = $request->payment_day;
@@ -132,9 +131,6 @@ class userController extends Controller
             return redirect($redirect_error);
         };
         if (!isset($phone)) {
-            return redirect($redirect_error);
-        };
-        if (!isset($nit)) {
             return redirect($redirect_error);
         };
         if (!isset($utility)) {
@@ -163,21 +159,20 @@ class userController extends Controller
         $values = array(
             'name' => strtoupper($name),
             'last_name' => strtoupper($last_name),
-            'email' => $nit,
+            'email' => $phone,
             'level' => 'user',
             'address' => strtoupper($address),
             'province' => strtoupper($province),
             'phone' => $phone,
             'password' => Str::random(5),
             'lat' => $lat,
-            'lng' => $lng,
-            'nit' => $nit
+            'lng' => $lng
         );
 
-        if (!User::where('nit', $nit)->exists()) {
+        if (!User::where('phone', $phone)->exists()) {
             $id = User::insertGetId($values);
         } else {
-            $id = User::where('nit', $nit)->first()->id;
+            $id = User::where('phone', $phone)->first()->id;
 
             if (db_agent_has_user::where('id_client', $id)->exists()) {
                 $agent_data = db_agent_has_user::where('id_client', $id)->first();

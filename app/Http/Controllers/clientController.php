@@ -128,7 +128,6 @@ class clientController extends Controller
     {
         $name = $request->name;
         $last_name = $request->last_name;
-        $nit = $request->nit_number;
         $address = $request->address;
         $province = $request->province;
         $phone = $request->phone;
@@ -137,7 +136,6 @@ class clientController extends Controller
         $values = array(
             'name' => $name,
             'last_name' => $last_name,
-            'nit' => $nit,
             'address' => $address,
             'province' => $province,
             'phone' => $phone,

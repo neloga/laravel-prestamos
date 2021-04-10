@@ -17,10 +17,6 @@
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
                                     <div class="form-group">
-                                        <label for="nit_number">Nº Identificacion:</label>
-                                        <input type="text" name="nit_number" value="{{isset($user) ? $user->nit : ''}}" class="form-control" id="nit_number" required>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="name">Nombres:</label>
                                         <input type="text" name="name"  value="{{isset($user) ? $user->name : ''}}"  class="form-control" id="name" required>
                                     </div>
