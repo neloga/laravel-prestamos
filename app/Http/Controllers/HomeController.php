@@ -7,6 +7,8 @@ use App\db_close_day;
 use App\db_credit;
 use App\db_summary;
 use App\db_supervisor_has_agent;
+use App\db_wallet;
+use App\db_users;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +33,16 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $ganancia = db_summary::where('id_agent',Auth::id())
+            ->sum('ganancia');
+
+        $credit = db_credit::where('id_agent',Auth::id())
+            ->sum('amount_neto');
+
+        $customers = db_users::where('level','user')
+            ->count('id');
+
+
         $data_summary = db_summary::whereDate('summary.created_at',
             Carbon::now()->toDateString())
             ->where('credit.id_agent', Auth::id())
@@ -78,7 +90,10 @@ class HomeController extends Controller
             'base_agent' => $base,
             'total_bill' => $bill->sum('amount'),
             'total_summary' => $total_summary,
-            'close_day' => $close_day
+            'close_day' => $close_day,
+            'customers' => $customers,
+            'ganancia' => $ganancia,
+            'credit' => $credit
         ];
 
         return view('home',$data);
