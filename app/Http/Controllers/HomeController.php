@@ -36,8 +36,7 @@ class HomeController extends Controller
         $ganancia = db_summary::where('id_agent',Auth::id())
             ->sum('ganancia');
 
-        $credit = db_credit::where('id_agent',Auth::id())
-            ->sum('amount_neto');
+        $credit = db_credit::where('id_agent',Auth::id())->sum('amount_neto');
 
         $customers = db_users::where('level','user')
             ->count('id');
@@ -91,9 +90,9 @@ class HomeController extends Controller
             'total_bill' => $bill->sum('amount'),
             'total_summary' => $total_summary,
             'close_day' => $close_day,
-            'customers' => $customers,
             'ganancia' => $ganancia,
-            'credit' => $credit
+            'credit' => $credit,
+            'customers' => $customers,
         ];
 
         return view('home',$data);
