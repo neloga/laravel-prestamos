@@ -288,21 +288,21 @@
                 </div>
             </div><!-- .widget -->
         </a>
-
     </div>
     <div class="col-md-4 col-sm-6">
-        <a href="{{url('transaction')}}">
+        <a href="{{url('client/create')}}">
             <div class="widget stats-widget widget-resume">
-                <div class="widget-body h-100 clearfix bg-white">
+                <div class="widget-body clearfix h-100 bg-white">
                     <div class="pull-left">
-                        <h3 class="widget-title text-dark">RECAUDADO</h3>
-                        <h3 class="widget-title text-dark"><b>{{$total_summary}}</b></h3>
+                        <h3 class="widget-title text-dark">PRESTADO</h3>
+                        <h3 class="widget-title text-dark">
+                            <b>{{$credit[0]}}</b>
+                        </h3>
                     </div>
-                    <span class="pull-right big-icon text-success watermark"><i class="fa fa-arrow-up"></i></span>
+                    <span class="pull-right big-icon text-danger watermark"><i class="fa fa-arrow-down"></i></span>
                 </div>
             </div><!-- .widget -->
         </a>
-
     </div>
     <div class="col-md-4 col-sm-6">
         <a href="{{url('bill')}}">
@@ -316,38 +316,6 @@
                 </div>
             </div><!-- .widget -->
         </a>
-
-    </div>
-
-    <div class="col-md-4 col-sm-6">
-        <a href="{{url('client/create')}}">
-            <div class="widget stats-widget widget-resume">
-                <div class="widget-body clearfix h-100 bg-white">
-                    <div class="pull-left">
-                        <h3 class="widget-title text-dark">PRESTADO</h3>
-                        <h3 class="widget-title text-dark">
-                            <b>{{$credit}}</b>
-                        </h3>
-                    </div>
-                    <span class="pull-right big-icon text-danger watermark"><i class="fa fa-arrow-down"></i></span>
-                </div>
-            </div><!-- .widget -->
-        </a>
-
-    </div>
-    <div class="col-md-4 col-sm-6">
-        <a href="{{url('transaction')}}">
-            <div class="widget stats-widget widget-resume">
-                <div class="widget-body h-100 clearfix bg-white">
-                    <div class="pull-left">
-                        <h3 class="widget-title text-dark">GANANCIA</h3>
-                        <h3 class="widget-title text-dark"><b>{{$ganancia}}</b></h3>
-                    </div>
-                    <span class="pull-right big-icon text-success watermark"><i class="fa fa-arrow-up"></i></span>
-                </div>
-            </div><!-- .widget -->
-        </a>
-
     </div>
     <div class="col-md-4 col-sm-6">
         <a href="{{url('bill')}}">
@@ -361,8 +329,34 @@
                 </div>
             </div><!-- .widget -->
         </a>
-
     </div>
+    <div class="col-md-4 col-sm-6">
+        <a href="{{url('transaction')}}">
+            <div class="widget stats-widget widget-resume">
+                <div class="widget-body h-100 clearfix bg-white">
+                    <div class="pull-left">
+                        <h3 class="widget-title text-dark">RECAUDADO</h3>
+                        <h3 class="widget-title text-dark"><b>{{$total_payments}}</b></h3>
+                    </div>
+                    <span class="pull-right big-icon text-success watermark"><i class="fa fa-arrow-up"></i></span>
+                </div>
+            </div><!-- .widget -->
+        </a>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <a href="{{url('transaction')}}">
+            <div class="widget stats-widget widget-resume">
+                <div class="widget-body h-100 clearfix bg-white">
+                    <div class="pull-left">
+                        <h3 class="widget-title text-dark">GANANCIA</h3>
+                        <h3 class="widget-title text-dark"><b>{{$ganancia}}</b></h3>
+                    </div>
+                    <span class="pull-right big-icon text-success watermark"><i class="fa fa-arrow-up"></i></span>
+                </div>
+            </div><!-- .widget -->
+        </a>
+    </div>
+    
 
     <div class="clearfix"></div>
     <div class="row m-0 d-block col-12 pb-4">

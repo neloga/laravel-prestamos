@@ -12,6 +12,7 @@ use App\db_users;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -36,7 +37,23 @@ class HomeController extends Controller
         $ganancia = db_summary::where('id_agent',Auth::id())
             ->sum('ganancia');
 
-        $credit = db_credit::where('id_agent',Auth::id())->sum('amount_neto');
+        $credit = db_credit::where('id_agent',Auth::id())
+            ->where('status', '=', 'inprogress');
+
+        //Get the remain amount of credits
+        $get_total_amount = db_credit::where('id_agent',Auth::id())
+            ->where('status', '=', 'inprogress')
+            ->select(DB::raw('SUM(amount_neto * (1+utility)) as total'))
+            ->get();
+
+
+        //Select amount from summary s join credit c on s.id_credit = c.id where c.status = 'inprogress' and s.id_agent = 3
+        $get_total_payments = db_summary::where('summary.id_agent', Auth::id())
+            ->where('credit.status','=', 'inprogress')
+            ->join('credit', 'summary.id_credit','=','credit.id')
+            ->select(
+                'amount'
+            );
 
         $customers = db_users::where('level','user')
             ->count('id');
@@ -72,6 +89,8 @@ class HomeController extends Controller
         $base -= $base_credit;
 
         $total_summary = $data_summary->sum('amount');
+        
+        //get today bills
 
         $sql = array(
             ['id_agent', '=', Auth::id()]
@@ -84,15 +103,17 @@ class HomeController extends Controller
             ->join('wallet', 'bills.id_wallet', '=', 'wallet.id')
             ->select('bills.*', 'wallet.name as wallet_name')
             ->get();
-
+        
+        //Data will be sent
         $data = [
-            'base_agent' => $base,
-            'total_bill' => $bill->sum('amount'),
+            'base_agent'    => $base,
+            'credit'        => $get_total_amount,
+            'total_bill'    => $bill->sum('amount'),
+            'customers'     => $customers,
             'total_summary' => $total_summary,
-            'close_day' => $close_day,
-            'ganancia' => $ganancia,
-            'credit' => $credit,
-            'customers' => $customers,
+            'total_payments' => $get_total_payments->sum('summary.amount'),
+            'ganancia'      => $ganancia,
+            'close_day'     => $close_day,            
         ];
 
         return view('home',$data);
