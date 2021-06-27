@@ -296,7 +296,7 @@
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">PRESTADO</h3>
                         <h3 class="widget-title text-dark">
-                            <b>{{$credit[0]}}</b>
+                            <b>{{$credit[0]->total}}</b>
                         </h3>
                     </div>
                     <span class="pull-right big-icon text-danger watermark"><i class="fa fa-arrow-down"></i></span>
