@@ -33,9 +33,35 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $ganancia = db_summary::where('id_agent',Auth::id())
-            ->sum('ganancia');
+    {   
+        // Helper functions for this controller
+        $today = Carbon::now();
+
+        Carbon::createFromDate();
+            $temp_month = 0;
+            $temp_year = 0;
+
+            if($today->month >= 5 && $today->month <= $today->daysInMonth) {
+                $temp_month = $today->month + 1;
+                $gastos_startDate = Carbon::createFromDate($today->year,$today->month,5);
+                $gastos_endDate = Carbon::createFromDate($today->year,$temp_month,5);
+            } else {
+                $temp_month = $today->month - 1;
+                $gastos_startDate = Carbon::createFromDate($today->year,$temp_month,5);
+                $gastos_endDate = Carbon::createFromDate($today->year,$month,5);
+            }
+        
+
+        // Get in a specific
+        $sqlga = array(
+            ['id_agent', '=', Auth::id()]
+        );
+        $sqlga[] = ['summary.created_at', '>=', $gastos_startDate];
+        $sqlga[] = ['summary.created_at', '<=', $gastos_endDate];
+
+        $ganancia = db_summary::where($sqlga)
+            ->select('ganancia')
+            ->get();
 
         $credit = db_credit::where('id_agent',Auth::id())
             ->where('status', '=', 'inprogress');
@@ -95,8 +121,8 @@ class HomeController extends Controller
         $sql = array(
             ['id_agent', '=', Auth::id()]
         );
-        $sql[] = ['bills.created_at', '>=', Carbon::now()->startOfDay()];
-        $sql[] = ['bills.created_at', '<=', Carbon::now()->endOfDay()];
+        $sql[] = ['bills.created_at', '>=', $gastos_startDate];
+        $sql[] = ['bills.created_at', '<=', $gastos_endDate];
 
 
         $bill = db_bills::where($sql)
@@ -112,7 +138,9 @@ class HomeController extends Controller
             'customers'     => $customers,
             'total_summary' => $total_summary,
             'total_payments' => $get_total_payments->sum('summary.amount'),
-            'ganancia'      => $ganancia,
+            'ganancia'      => $ganancia->sum('ganancia'),
+            'inicio'         => $gastos_startDate->format('d/m/y'),
+            'final'         => $gastos_endDate->format('d/m/y'),
             'close_day'     => $close_day,            
         ];
 

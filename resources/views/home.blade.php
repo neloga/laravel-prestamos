@@ -266,7 +266,7 @@
 
 @section('agent-resume')
     <div class="col-12 pb-2">
-        <small>Los montos siguientes son el total del día actual</small>
+        
     </div>
     <div class="col-md-4 col-sm-6">
         <a href="{{url('client/create')}}">
@@ -274,11 +274,12 @@
                 <div class="widget-body clearfix h-100 bg-white">
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">DISPONIBLE (CAJA)</h3>
+                        <small>-</small>
                         <h3 class="widget-title text-dark">
                             <b>{{$base_agent - $total_bill}}</b>
                             @if($total_summary>0)
-                                <span>+</span>
-                                <span class=""> {{$total_summary}}</span>
+                                <span>+ {{$total_summary}}</span>
+                                <br>
                                 <span class="text-success">= {{($base_agent - $total_bill) + $total_summary}}</span>
                             @endif
 
@@ -295,6 +296,7 @@
                 <div class="widget-body clearfix h-100 bg-white">
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">PRESTADO</h3>
+                        <small>vigentes con intereses</small>
                         <h3 class="widget-title text-dark">
                             <b>{{$credit[0]->total}}</b>
                         </h3>
@@ -305,11 +307,13 @@
         </a>
     </div>
     <div class="col-md-4 col-sm-6">
-        <a href="{{url('bill')}}">
+        <!-- <a href="{{url('bill')}}"> -->
+        <a href="#">
             <div class="widget stats-widget widget-resume">
                 <div class="widget-body h-100 clearfix bg-white">
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">GASTOS</h3>
+                        <small>de {{$inicio}} a {{$final}}</small>
                         <h3 class="widget-title text-dark"><b>{{$total_bill}}</b></h3>
                     </div>
                     <span class="pull-right big-icon text-warning watermark"><i class="fa fa-arrow-right"></i></span>
@@ -323,6 +327,7 @@
                 <div class="widget-body h-100 clearfix bg-white">
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">CLIENTES</h3>
+                        <small>Todos</small>
                         <h3 class="widget-title text-dark"><b>{{$customers}}</b></h3>
                     </div>
                     <span class="pull-right big-icon text-warning watermark"><i class="fa fa-user"></i></span>
@@ -336,6 +341,7 @@
                 <div class="widget-body h-100 clearfix bg-white">
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">RECAUDADO</h3>
+                        <small>pagos recibidos</small>
                         <h3 class="widget-title text-dark"><b>{{$total_payments}}</b></h3>
                     </div>
                     <span class="pull-right big-icon text-success watermark"><i class="fa fa-arrow-up"></i></span>
@@ -349,6 +355,7 @@
                 <div class="widget-body h-100 clearfix bg-white">
                     <div class="pull-left">
                         <h3 class="widget-title text-dark">GANANCIA</h3>
+                        <small>de {{$inicio}} a {{$final}}</small>
                         <h3 class="widget-title text-dark"><b>{{$ganancia}}</b></h3>
                     </div>
                     <span class="pull-right big-icon text-success watermark"><i class="fa fa-arrow-up"></i></span>
